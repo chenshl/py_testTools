@@ -5,6 +5,7 @@
 from tkinter import *
 import hashlib
 import time
+from googletrans import Translator
 
 LOG_LINE_NUM = 0
 
@@ -33,10 +34,13 @@ class MY_GUI_SET():
         self.result_data_Text.grid(row=1, column=12, rowspan=15, columnspan=10)
         self.log_data_Text = Text(self.init_window_name, width=66, height=9)  # 日志框
         self.log_data_Text.grid(row=13, column=0, columnspan=10)
-        # 按钮
+        # 按钮-字符串转MD5
         self.str_trans_to_md5_button = Button(self.init_window_name, text="字符串转MD5", bg="lightblue", width=10,
                                               command=self.str_trans_to_md5)  # 调用内部方法  加()为直接调用
         self.str_trans_to_md5_button.grid(row=1, column=11)
+        # 按钮-翻译
+        self.trans_button = Button(self.init_window_name, text="GOOGLE翻译", bg="lightblue", width=10, command=self.trans_google)
+        self.trans_button.grid(row=2, column=11)
 
     # 功能函数
     def str_trans_to_md5(self):
@@ -74,6 +78,33 @@ class MY_GUI_SET():
         else:
             self.log_data_Text.delete(1.0, 2.0)
             self.log_data_Text.insert(END, logmsg_in)
+
+    # 检查字符串是否为中文，其中一个为中文则判断为中文
+    def check_contain_chinese(self, check_str):
+        for ch in check_str:
+            if u'\u4e00' <= ch <= u'\u9fff':
+                return True
+        return False
+
+    # 谷歌翻译
+    def trans_google(self):
+        src = self.init_data_Text.get(1.0, END).strip().replace("\n", "")
+        if src:
+            try:
+                translator = Translator(service_urls=['translate.google.cn'])
+                if self.check_contain_chinese(src):  # 判断输入是否为中文
+                    trans_result = translator.translate(src, src='zh-cn', dest='en').text
+                else:
+                    trans_result = translator.translate(src, src='en', dest='zh-cn').text
+                # print(trans_result)
+                self.result_data_Text.delete(1.0, END)
+                self.result_data_Text.insert(1.0, trans_result)
+                self.write_log_to_Text("INFO:trans_google success")
+            except:
+                self.result_data_Text.delete(1.0, END)
+                self.result_data_Text.insert(1.0, "GOOGLE翻译失败，请检查！")
+        else:
+            self.write_log_to_Text("ERROR:trans_google failed")
 
 
 def gui_start():
