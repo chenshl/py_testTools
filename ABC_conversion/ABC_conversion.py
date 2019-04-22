@@ -41,6 +41,9 @@ class MY_GUI_SET():
         # 按钮-翻译
         self.trans_button = Button(self.init_window_name, text="GOOGLE翻译", bg="lightblue", width=10, command=self.trans_google)
         self.trans_button.grid(row=2, column=11)
+        # 按钮-‘’拼接
+        self.quotation_marks_button = Button(self.init_window_name, text='引号拼接', bg='lightblue', width=10, command=self.quotation_marks)
+        self.quotation_marks_button.grid(row=3, column=11)
 
     # 功能函数
     def str_trans_to_md5(self):
@@ -105,6 +108,15 @@ class MY_GUI_SET():
                 self.result_data_Text.insert(1.0, "GOOGLE翻译失败，请检查！")
         else:
             self.write_log_to_Text("ERROR:trans_google failed")
+
+    # 查询参数引号凭借
+    def quotation_marks(self):
+        src = self.init_data_Text.get(1.0, END).strip().replace("\n", "")
+        if src:
+            quo_str = "'" + src + "'"
+            self.result_data_Text.delete(1.0, END)
+            self.result_data_Text.insert(1.0, quo_str)
+            self.write_log_to_Text("INFO:quotation_marks success")
 
 
 def gui_start():
