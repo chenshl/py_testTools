@@ -111,12 +111,17 @@ class MY_GUI_SET():
 
     # 查询参数引号凭借
     def quotation_marks(self):
-        src = self.init_data_Text.get(1.0, END).strip().replace("\n", "")
+        src = self.init_data_Text.get(1.0, END)
         if src:
-            quo_str = "'" + src + "'"
+            src_list = src.split()
+            quo_str = ""
             self.result_data_Text.delete(1.0, END)
+            for src_str in src_list:
+                quo_str += "'" + src_str + "',"
+            quo_str.rstrip(",")
             self.result_data_Text.insert(1.0, quo_str)
             self.write_log_to_Text("INFO:quotation_marks success")
+
 
 
 def gui_start():
