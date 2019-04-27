@@ -109,18 +109,23 @@ class MY_GUI_SET():
         else:
             self.write_log_to_Text("ERROR:trans_google failed")
 
-    # 查询参数引号凭借
+    # 查询参数引号拼接
     def quotation_marks(self):
         src = self.init_data_Text.get(1.0, END)
         if src:
-            src_list = src.split()
-            quo_str = ""
-            self.result_data_Text.delete(1.0, END)
-            for src_str in src_list:
-                quo_str += "'" + src_str + "',"
-            quo_str.rstrip(",")
-            self.result_data_Text.insert(1.0, quo_str)
-            self.write_log_to_Text("INFO:quotation_marks success")
+            try:
+                src_list = src.split()
+                quo_str = ""
+                self.result_data_Text.delete(1.0, END)
+                for src_str in src_list:
+                    quo_str += "'" + src_str + "',"
+                self.result_data_Text.insert(1.0, quo_str.rstrip(","))
+                self.write_log_to_Text("INFO:quotation_marks success")
+            except:
+                self.result_data_Text.delete(1.0, END)
+                self.result_data_Text.insert(1.0, "字符串添加引号拼接失败！请检查！")
+        else:
+            self.write_log_to_Text("ERROR:quotation_marks failed")
 
 
 
