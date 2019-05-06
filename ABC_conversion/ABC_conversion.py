@@ -44,6 +44,9 @@ class MY_GUI_SET():
         # 按钮-‘’拼接
         self.quotation_marks_button = Button(self.init_window_name, text='引号拼接', bg='lightblue', width=10, command=self.quotation_marks)
         self.quotation_marks_button.grid(row=3, column=11)
+        # 按钮-字符串len
+        self.str_length_button = Button(self.init_window_name, text='str长度', bg='lightblue', width=10, command=self.str_length)
+        self.str_length_button.grid(row=4, column=11)
 
     # 功能函数
     def str_trans_to_md5(self):
@@ -127,6 +130,19 @@ class MY_GUI_SET():
         else:
             self.write_log_to_Text("ERROR:quotation_marks failed")
 
+    # 计算字符串长度
+    def str_length(self):
+        src = self.init_data_Text.get(1.0, END).strip().replace("\n", "")
+        if src:
+            try:
+                self.result_data_Text.delete(1.0, END)
+                self.result_data_Text.insert(1.0, "字符串长度：{}".format(len(src)))
+                self.write_log_to_Text("INFO:str_length success")
+            except:
+                self.result_data_Text.delete(1.0, END)
+                self.result_data_Text.insert(1.0, "计算字符串长度错误，请检查！")
+        else:
+            self.write_log_to_Text("ERROR:str_length failed")
 
 
 def gui_start():
