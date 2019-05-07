@@ -15,7 +15,7 @@ class MY_GUI_SET():
         self.init_window_name = init_window_name
 
     def set_init_window(self):
-        self.init_window_name.title("内部测试工具  开发者：潜行100  问题反馈：QQ35643856")
+        self.init_window_name.title("内部测试工具  开发者：潜行100  QQ35643856")
         self.init_window_name.geometry("1068x681+10+10")
         # init_window["bg"] = "pink"
         self.init_window_name.attributes("-alpha", 0.9)  # 虚化 值越小虚化程度越高
